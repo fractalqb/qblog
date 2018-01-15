@@ -1,13 +1,23 @@
 package qblog
 
-type PkgRoot struct {
-	root *Logger
+import (
+	"io"
+)
+
+type PkgConfig struct {
+	pkgRoot *Logger
 }
 
-func Root(root *Logger) PkgRoot {
-	return PkgRoot{root}
+func Package(root *Logger) PkgConfig {
+	return PkgConfig{root}
 }
 
-func (pkg PkgRoot) SetParent(l *Logger) {
-	l.AddSub(pkg.root)
+func (pkg PkgConfig) SetParent(l *Logger) {
+	l.AddSub(pkg.pkgRoot)
 }
+
+func (cfg PkgConfig) Level() int { return cfg.pkgRoot.lvl }
+
+func (cfg PkgConfig) SetLevel(level int) { cfg.pkgRoot.SetLevel(level) }
+
+func (cfg PkgConfig) SetOutput(w io.Writer) { cfg.pkgRoot.SetOutput(w) }
