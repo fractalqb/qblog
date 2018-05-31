@@ -75,6 +75,9 @@ func (l *Logger) SetLevel(level int) {
 func (l *Logger) SetOutput(w io.Writer) {
 	l.out = w
 	l.Logger.SetOutput(w)
+	for sub, _ := range l.subs {
+		sub.SetOutput(w)
+	}
 }
 
 func (parent *Logger) AddSub(sub *Logger) {
