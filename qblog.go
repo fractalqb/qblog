@@ -43,6 +43,10 @@ func Std(prefix string) *Logger {
 	return NewLevel(os.Stderr, prefix, Default)
 }
 
+func (l *Logger) Logs(level int) bool {
+	return level >= l.lvl
+}
+
 func (l *Logger) Log(level int, v ...interface{}) {
 	if level >= l.lvl {
 		l.Print(v...)
